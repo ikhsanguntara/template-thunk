@@ -4,7 +4,7 @@
     "private": true,
     "homepage": "/metronic/react/demo1",
     "scripts": {
-        "start": "react-scripts start -o",
+        "start": "react-scripts --openssl-legacy-provider start -o",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
