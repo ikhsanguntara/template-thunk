@@ -11,7 +11,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { Layout } from "../_metronic/layout";
 import BasePage from "./BasePage";
 import { AuthPage } from "./pages/auth/AuthPage";
-import { ErrorPage } from "./pages/ErrorPage";
+import { ErrorPage } from "./pages/util/ErrorPage";
 
 export function Routes() {
   const { isAuthorized } = useSelector(

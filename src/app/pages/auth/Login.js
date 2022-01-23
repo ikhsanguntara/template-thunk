@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { login } from "./authSlice";
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+      dispatch(login());
     }, 2000);
   };
 
@@ -26,10 +30,7 @@ export const Login = () => {
       {/* end::Head */}
 
       {/*begin::Form*/}
-      <form
-        // onSubmit={formik.handleSubmit}
-        className="form fv-plugins-bootstrap fv-plugins-framework"
-      >
+      <form className="form fv-plugins-bootstrap fv-plugins-framework">
         <div className="form-group fv-plugins-icon-container">
           <input
             placeholder="Email"

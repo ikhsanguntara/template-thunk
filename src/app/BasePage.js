@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { Redirect, Switch } from "react-router-dom";
 import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
-import { BuilderPage } from "./pages/BuilderPage";
-import { MyPage } from "./pages/MyPage";
-import { DashboardPage } from "./pages/DashboardPage";
-import { ErrorPage } from "./pages/ErrorPage";
+import { BuilderPage } from "./pages/util/BuilderPage";
+import { MyPage } from "./pages/util/MyPage";
+import { ErrorPage } from "./pages/util/ErrorPage";
+import { DashboardPage } from "./pages/dashboard/DashboardPage";
 
 export default function BasePage() {
   // useEffect(() => {

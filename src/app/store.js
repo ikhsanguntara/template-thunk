@@ -1,11 +1,19 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { persistStore } from "redux-persist";
-import authReducer from "./pages/auth/authSlice";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { rootReducer } from "./rootReducer";
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["auth"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    authReducer,
-  },
+  reducer: persistedReducer,
   middleware: {
     ...getDefaultMiddleware({
       // immutableCheck: false,
