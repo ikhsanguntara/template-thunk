@@ -4,6 +4,7 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { ErrorPage } from "./pages/ErrorPage";
 
 export default function BasePage() {
   // useEffect(() => {
@@ -21,7 +22,7 @@ export default function BasePage() {
         <ContentRoute path="/dashboard" component={DashboardPage} />
         <ContentRoute path="/builder" component={BuilderPage} />
         <ContentRoute path="/my-page" component={MyPage} />
-        <Redirect to="error/error-v1" />
+        <Redirect to="/error" component={ErrorPage} />
       </Switch>
     </Suspense>
   );
