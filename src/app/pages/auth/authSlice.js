@@ -111,7 +111,7 @@ export const authSlice = createSlice({
       .addCase(me.fulfilled, (state, action) => {
         state.loading = false;
         // state.user = action.payload.data;
-        // state.user = dummyUser;
+        state.user = dummyUser;
       });
   },
 });

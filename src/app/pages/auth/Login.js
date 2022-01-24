@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { login, me } from "./authSlice";
 import { showErrorDialog } from "../../utility";
 
 export const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     userName: "",
@@ -19,7 +21,7 @@ export const Login = () => {
       const response = await dispatch(me());
       const res = response.payload;
       if (res.status === 200) {
-        console.log(res.data);
+        history.push("/dashboard");
       } else {
         showErrorDialog(res.message);
       }
