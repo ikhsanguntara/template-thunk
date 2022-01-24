@@ -2,18 +2,49 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { login } from "./authSlice";
+import { login, me } from "./authSlice";
+import { showErrorDialog } from "../../utility";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [userInput, setUserInput] = useState({
+    userName: "",
+    password: "",
+  });
 
-  const handleLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
+  const getMe = async () => {
+    try {
+      setLoading(true);
+      const response = await dispatch(me());
+      const res = response.payload;
+      if (res.status === 200) {
+        console.log(res.data);
+      } else {
+        showErrorDialog(res.message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
-      dispatch(login());
-    }, 2000);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await dispatch(login(userInput));
+      const res = response.payload;
+      if (res.status === 200) {
+        getMe();
+      } else {
+        showErrorDialog(res.message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,13 +61,17 @@ export const Login = () => {
       {/* end::Head */}
 
       {/*begin::Form*/}
-      <form className="form fv-plugins-bootstrap fv-plugins-framework">
+      <div className="form fv-plugins-bootstrap fv-plugins-framework">
         <div className="form-group fv-plugins-icon-container">
           <input
             placeholder="Email"
             type="email"
             className={`form-control form-control-solid h-auto py-5 px-6`}
             name="email"
+            value={userInput.userName}
+            onChange={(e) => {
+              setUserInput({ ...userInput, userName: e.target.value });
+            }}
           />
         </div>
         <div className="form-group fv-plugins-icon-container">
@@ -45,6 +80,10 @@ export const Login = () => {
             type="password"
             className={`form-control form-control-solid h-auto py-5 px-6`}
             name="password"
+            value={userInput.password}
+            onChange={(e) => {
+              setUserInput({ ...userInput, password: e.target.value });
+            }}
           />
         </div>
         <div className="form-group d-flex flex-wrap justify-content-between align-items-center">
@@ -66,7 +105,7 @@ export const Login = () => {
             {loading && <span className="ml-3 spinner spinner-white"></span>}
           </button>
         </div>
-      </form>
+      </div>
       {/*end::Form*/}
     </div>
   );

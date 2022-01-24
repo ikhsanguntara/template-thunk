@@ -22,6 +22,7 @@ import {
   MetronicSubheaderProvider,
 } from "./_metronic/layout";
 import { MetronicI18nProvider } from "./_metronic/i18n";
+import { setupAxios } from "./app/axios";
 
 /**
  * Base URL of the website.
@@ -29,6 +30,7 @@ import { MetronicI18nProvider } from "./_metronic/i18n";
  * @see https://facebook.github.io/create-react-app/docs/using-the-public-folder
  */
 const { PUBLIC_URL } = process.env;
+setupAxios(store);
 
 ReactDOM.render(
   <MetronicI18nProvider>

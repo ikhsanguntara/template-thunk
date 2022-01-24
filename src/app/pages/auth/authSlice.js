@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { axios } from "../../axios";
 
 const dummyUser = {
   id: 1,
@@ -56,26 +57,68 @@ const dummyUser = {
   },
 };
 
-const initialState = {
-  user: null,
-  token: null,
-};
+export const login = createAsyncThunk(
+  "auth/login",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/user/login", payload);
+      return response.data;
+    } catch (err) {
+      if (!err.response) throw err;
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const me = createAsyncThunk(
+  "auth/me",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/user/me");
+      return response.data;
+    } catch (err) {
+      if (!err.response) throw err;
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: {
+    loading: false,
+    token: null,
+    user: dummyUser,
+  },
   reducers: {
-    login: (state) => {
-      state.token = "test";
-      state.user = dummyUser;
-    },
     logout: (state) => {
       state.token = null;
       state.user = null;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.data.accessToken;
+      })
+      .addCase(me.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(me.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.user = action.payload.data;
+        // state.user = dummyUser;
+      });
+  },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
+
+export const selectToken = (state) => state.auth.token;
+export const selectUser = (state) => state.auth.user;
 
 export default authSlice.reducer;

@@ -16,7 +16,7 @@ import { ErrorPage } from "./pages/util/ErrorPage";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
-      isAuthorized: auth.user != null,
+      isAuthorized: auth.token != null && auth.user != null,
     }),
     shallowEqual
   );
