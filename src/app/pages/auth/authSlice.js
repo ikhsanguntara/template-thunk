@@ -61,7 +61,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/user/login", payload);
+      const response = await axios.post("/api/login", payload);
       return response.data;
     } catch (err) {
       if (!err.response) throw err;
@@ -74,7 +74,8 @@ export const me = createAsyncThunk(
   "auth/me",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/user/me");
+      const response = await axios.get("/api/user/me");
+      console.log(response.data, "test");
       return response.data;
     } catch (err) {
       if (!err.response) throw err;
@@ -102,21 +103,29 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log(action, "action");
         state.loading = false;
-        state.token = action.payload.data.accessToken;
+        state.token = action.payload.data.token;
       })
       .addCase(me.pending, (state) => {
         state.loading = true;
       })
       .addCase(me.fulfilled, (state, action) => {
         state.loading = false;
-        // state.user = action.payload.data;
-        state.user = dummyUser;
+        state.user = action.payload.data;
+        // state.user = dummyUser;
       });
   },
 });
 
 export const { logout } = authSlice.actions;
+
+
+export function getUserByToken() {
+  // Authorization head should be fulfilled in interceptor.
+  return axios.get("/api/user/me");
+}
+
 
 export const selectToken = (state) => state.auth.token;
 export const selectUser = (state) => state.auth.user;

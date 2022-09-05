@@ -8,6 +8,7 @@ import { toAbsoluteUrl, checkIsActive } from "../../../../_helpers";
 
 export function AsideMenuList({ layoutProps }) {
   const location = useLocation();
+
   const getMenuItemActive = (url, hasSubmenu = false) => {
     return checkIsActive(location, url)
       ? ` ${!hasSubmenu &&
@@ -15,138 +16,289 @@ export function AsideMenuList({ layoutProps }) {
       : "";
   };
 
+  const listMenu = [
+    {
+      menu_name: "Dashboard",
+      title: "Dasboard",
+      url: "/dashbaord",
+      icon: "icon-home",
+      permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+      childs: [],
+    },
+    {
+      menu_name: "Builder",
+      title: "Builder",
+      url: "/builder",
+      icon: "icon-home",
+      permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+      childs: [],
+    },
+    {
+      menu_name: "Administration",
+      title: "Administration",
+      url: "/administration",
+      icon: "icon-home",
+      permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+      childs: [
+        {
+          menu_name: "Master User",
+          title: "Master User",
+          url: "/administration/master-user",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [
+            {
+              menu_name: "User",
+              title: "User",
+              url: "/administration/master-user/user",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+            {
+              menu_name: "Roles",
+              title: "Roles",
+              url: "/administration/master-user/roles",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+          ],
+        },
+
+        {
+          menu_name: "Bussiness Parameter",
+          title: "Bussiness Parameter",
+          url: "/administration/bussiness-parameter",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [
+            {
+              menu_name: "Parameter Group",
+              title: "Parameter Group",
+              url: "/administration/bussiness-parameter/grup",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+            {
+              menu_name: "Parameter",
+              title: "Parameter",
+              url: "/administration/bussiness-parameter/paramater",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+          ],
+        },
+        {
+          menu_name: "Master Menu",
+          title: "Master Menu",
+          url: "/administration/master-menu",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [
+            {
+              menu_name: "Menu",
+              title: "Menu",
+              url: "/administration/master-menu/menu",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+            {
+              menu_name: "Menu Tree",
+              title: "Menu",
+              url: "/administration/master-menu/menu-tree",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+          ],
+        },
+        {
+          menu_name: "Email",
+          title: "Email",
+          url: "/administration/email",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [
+            {
+              menu_name: "Template",
+              title: "Template",
+              url: "/administration/email/template",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+            {
+              menu_name: "Account",
+              title: "Account",
+              url: "/administration/email/account",
+              icon: "icon-home",
+              permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+              childs: [],
+            },
+          ],
+        },
+        {
+          menu_name: "Password Policy",
+          title: "Password Policy",
+          url: "/administration/Password Policy",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [],
+        },
+        {
+          menu_name: "General Setting",
+          title: "General Setting",
+          url: "/administration/general-setting",
+          icon: "icon-home",
+          permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+          childs: [],
+        },
+      ],
+    },
+  ];
+
   return (
     <>
-      {/* begin::Menu Nav */}
+      {/* Menu Nav */}
       <ul className={`menu-nav ${layoutProps.ulClasses}`}>
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item ${getMenuItemActive("/dashboard", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/dashboard">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
-            </span>
-            <span className="menu-text">Dashboard</span>
-          </NavLink>
-        </li>
-        {/*end::1 Level*/}
-
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item ${getMenuItemActive("/builder", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/builder">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Home/Library.svg")} />
-            </span>
-            <span className="menu-text">Layout Builder</span>
-          </NavLink>
-        </li>
-        {/*end::1 Level*/}
-
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item ${getMenuItemActive("/my-page", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/my-page">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
-            </span>
-            <span className="menu-text">My Page</span>
-          </NavLink>
-        </li>
-        {/*end::1 Level*/}
-
-        {/* Applications */}
-        {/* begin::section */}
-        <li className="menu-section ">
-          <h4 className="menu-text">Applications</h4>
-          <i className="menu-icon flaticon-more-v2"></i>
-        </li>
-        {/* end:: section */}
-
-        {/* eCommerce */}
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/e-commerce",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/e-commerce">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Shopping/Bag2.svg")} />
-            </span>
-            <span className="menu-text">eCommerce</span>
-          </NavLink>
-          <div className="menu-submenu">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">eCommerce</span>
-                </span>
-              </li>
-              {/*begin::2 Level*/}
+        {/* Loop Menu Level 1 */}
+        {listMenu.map((menu) => {
+          if (menu.childs.length === 0) {
+            // Render don't have child
+            return (
               <li
                 className={`menu-item ${getMenuItemActive(
-                  "/e-commerce/customers"
+                  `${menu.url}`,
+                  false
                 )}`}
                 aria-haspopup="true"
               >
-                <NavLink className="menu-link" to="/e-commerce/customers">
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">Customers</span>
+                <NavLink className="menu-link" to={menu.url}>
+                  <span className="svg-icon menu-icon">
+                    <SVG src={toAbsoluteUrl(`/media/svg/icons/${menu.icon}`)} />
+                  </span>
+                  <span className="menu-text">{menu.title}</span>
                 </NavLink>
               </li>
-              {/*end::2 Level*/}
-              {/*begin::2 Level*/}
+            );
+          } else {
+            // Render if have child
+            return (
               <li
-                className={`menu-item ${getMenuItemActive(
-                  "/e-commerce/products"
+                className={`menu-item menu-item-submenu ${getMenuItemActive(
+                  `${menu.url}`,
+                  true
                 )}`}
                 aria-haspopup="true"
+                data-menu-toggle="hover"
               >
-                <NavLink className="menu-link" to="/e-commerce/products">
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">Products</span>
-                </NavLink>
-              </li>
-              {/*end::2 Level*/}
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
+                <NavLink className="menu-link menu-toggle" to={menu.url}>
+                  <span className="svg-icon menu-icon">
+                    <SVG
+                      src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}
+                    />
+                  </span>
+                  <span className="menu-text">{menu.title}</span>
 
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item ${getMenuItemActive("/user-profile", false)}`}
-          aria-haspopup="true"
-        >
-          <NavLink className="menu-link" to="/user-profile">
-            <span className="svg-icon menu-icon">
-              <SVG
-                src={toAbsoluteUrl(
-                  "/media/svg/icons/Communication/Add-user.svg"
-                )}
-              />
-            </span>
-            <span className="menu-text">User Profile</span>
-          </NavLink>
-        </li>
-        {/*end::1 Level*/}
+                  <i className="menu-arrow" />
+                </NavLink>
+                <div className="menu-submenu ">
+                  <ul className="menu-subnav">
+                    <ul className="menu-subnav">
+                      {/* Loop Menu Level 2 */}
+                      {menu.childs.map((submenu) => {
+                        if (submenu.childs.length === 0) {
+                          // Render if don't have child
+                          return (
+                            <li
+                              className={`menu-item ${getMenuItemActive(
+                                `${submenu.url}`
+                              )}`}
+                              aria-haspopup="true"
+                            >
+                              <NavLink className="menu-link" to={submenu.url}>
+                                <i className="menu-bullet menu-bullet-dot">
+                                  <span />
+                                </i>
+                                <span className="menu-text">
+                                  {submenu.title}
+                                </span>
+                              </NavLink>
+                            </li>
+                          );
+                        } else {
+                          // Render if have child
+                          return (
+                            <li
+                              className={`menu-item menu-item-submenu ${getMenuItemActive(
+                                `${submenu.url}`,
+                                true
+                              )}`}
+                              aria-haspopup="true"
+                              data-menu-toggle="hover"
+                            >
+                              <NavLink
+                                className="menu-link menu-toggle"
+                                to={submenu.url}
+                              >
+                                <span className="svg-icon menu-icon">
+                                  <SVG
+                                    src={toAbsoluteUrl(
+                                      `/media/svg/icons/${submenu.icon}`
+                                    )}
+                                  />
+                                </span>
+                                <span className="menu-text">
+                                  {submenu.title}
+                                </span>
+
+                                <i className="menu-arrow" />
+                              </NavLink>
+
+                              <div className="menu-submenu ">
+                                <ul className="menu-subnav">
+                                  <ul className="menu-subnav"></ul>
+                                  {/* Loop Menu Level 3 */}
+                                  {submenu.childs.map((child) => {
+                                    return (
+                                      <li
+                                        className={`menu-item ${getMenuItemActive(
+                                          `${child.url}`
+                                        )}`}
+                                        aria-haspopup="true"
+                                      >
+                                        <NavLink
+                                          className="menu-link"
+                                          to={child.url}
+                                        >
+                                          <i className="menu-bullet menu-bullet-dot">
+                                            <span />
+                                          </i>
+                                          <span className="menu-text">
+                                            {child.title}
+                                          </span>
+                                        </NavLink>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            </li>
+                          );
+                        }
+                      })}
+                    </ul>
+                  </ul>
+                </div>
+              </li>
+            );
+          }
+        })}
       </ul>
-      {/* end::Menu Nav */}
     </>
   );
 }

@@ -5,6 +5,10 @@ import { BuilderPage } from "./pages/util/BuilderPage";
 import { MyPage } from "./pages/util/MyPage";
 import { ErrorPage } from "./pages/util/ErrorPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
+import { UserPage } from "./pages/user/UserPage";
+import { UserCreate } from "./pages/user/UserCreate";
+import { ParamaterCreate } from "./pages/paramater/ParamaterCreate";
+import { ParameterPage } from "./pages/paramater/ParameterPage";
 
 export default function BasePage() {
   // useEffect(() => {
@@ -21,6 +25,25 @@ export default function BasePage() {
         }
         <ContentRoute path="/dashboard" component={DashboardPage} />
         <ContentRoute path="/builder" component={BuilderPage} />
+        {/* user */}
+        <ContentRoute
+          path="/administration/master-user/user/create"
+          component={UserCreate}
+        />
+        <ContentRoute
+          path="/administration/master-user/user"
+          component={UserPage}
+        />
+
+        {/* parameter */}
+        <ContentRoute
+          path="/administration/bussiness-parameter/paramater/create"
+          component={ParamaterCreate}
+        />
+        <ContentRoute
+          path="/administration/bussiness-parameter/paramater"
+          component={ParameterPage}
+        />
         <ContentRoute path="/my-page" component={MyPage} />
         <Redirect to="/error" component={ErrorPage} />
       </Switch>

@@ -5,14 +5,15 @@ import { useHistory } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { login, me } from "./authSlice";
 import { showErrorDialog } from "../../utility";
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
-    userName: "",
-    password: "",
+    userName: "admin",
+    password: "@Admin1234!",
   });
 
   const getMe = async () => {
@@ -23,7 +24,13 @@ export const Login = () => {
       if (res.status === 200) {
         history.push("/dashboard");
       } else {
-        showErrorDialog(res.message);
+        Swal.fire({
+          title: "Error!",
+          text: `${res.message}`,
+          icon: "error",
+          heightAuto: false,
+          confirmButtonText: "Ok",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -33,6 +40,24 @@ export const Login = () => {
   };
 
   const handleLogin = async () => {
+    if (userInput.userName === "") {
+      return Swal.fire({
+        title: "Error!",
+        text: `Please Input Username`,
+        icon: "error",
+        heightAuto: false,
+        confirmButtonText: "Ok",
+      });
+    }
+    if (userInput.password === "") {
+      return Swal.fire({
+        title: "Error!",
+        text: `Please Input Password`,
+        icon: "error",
+        heightAuto: false,
+        confirmButtonText: "Ok",
+      });
+    }
     try {
       setLoading(true);
       const response = await dispatch(login(userInput));
@@ -40,7 +65,13 @@ export const Login = () => {
       if (res.status === 200) {
         getMe();
       } else {
-        showErrorDialog(res.message);
+        Swal.fire({
+          title: "Error!",
+          text: `${res.message}`,
+          icon: "error",
+          heightAuto: false,
+          confirmButtonText: "Ok",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -103,7 +134,7 @@ export const Login = () => {
             onClick={handleLogin}
             className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
           >
-            <span>Sign In test</span>
+            <span>Sign In</span>
             {loading && <span className="ml-3 spinner spinner-white"></span>}
           </button>
         </div>
