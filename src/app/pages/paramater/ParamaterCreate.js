@@ -119,7 +119,7 @@ export const ParamaterCreate = () => {
                 <Form.Control type="password" />
               </Form.Group>
             </Form.Row>
-          </Form>{" "}
+          </Form>
         </CardBody>
       </Card>
     </>

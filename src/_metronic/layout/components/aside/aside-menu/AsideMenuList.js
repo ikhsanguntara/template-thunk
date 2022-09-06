@@ -20,7 +20,15 @@ export function AsideMenuList({ layoutProps }) {
     {
       menu_name: "Dashboard",
       title: "Dasboard",
-      url: "/dashbaord",
+      url: "/dashboard",
+      icon: "icon-home",
+      permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
+      childs: [],
+    },
+    {
+      menu_name: "layout",
+      title: "layout",
+      url: "/layout",
       icon: "icon-home",
       permissions: ["CANCEL", "CREATE", "DELETE", "READ", "UPDATE"],
       childs: [],

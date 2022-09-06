@@ -9,6 +9,7 @@ import { UserPage } from "./pages/user/UserPage";
 import { UserCreate } from "./pages/user/UserCreate";
 import { ParamaterCreate } from "./pages/paramater/ParamaterCreate";
 import { ParameterPage } from "./pages/paramater/ParameterPage";
+import { LayoutPage } from "./pages/layout/LayoutPage";
 
 export default function BasePage() {
   // useEffect(() => {
@@ -34,6 +35,9 @@ export default function BasePage() {
           path="/administration/master-user/user"
           component={UserPage}
         />
+
+        {/* layout */}
+        <ContentRoute path="/layout" component={LayoutPage} />
 
         {/* parameter */}
         <ContentRoute
