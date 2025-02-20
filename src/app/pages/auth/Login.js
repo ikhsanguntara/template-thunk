@@ -12,8 +12,8 @@ export const Login = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
-    userName: "admin",
-    password: "@Admin1234!",
+    username: "super_ikhsan",
+    password: "@#Superpvr4",
   });
 
   const getMe = async () => {
@@ -21,7 +21,7 @@ export const Login = () => {
       setLoading(true);
       const response = await dispatch(me());
       const res = response.payload;
-      if (res.status === 200) {
+      if (res.status_code === 200) {
         history.push("/dashboard");
       } else {
         Swal.fire({
@@ -40,7 +40,7 @@ export const Login = () => {
   };
 
   const handleLogin = async () => {
-    if (userInput.userName === "") {
+    if (userInput.username === "") {
       return Swal.fire({
         title: "Error!",
         text: `Please Input Username`,
@@ -62,7 +62,11 @@ export const Login = () => {
       setLoading(true);
       const response = await dispatch(login(userInput));
       const res = response.payload;
-      if (res.status === 200) {
+      console.log(res, "res");
+      console.log(response, "response");
+      if (res.status_code === 200) {
+        console.log("masuk ");
+
         getMe();
       } else {
         Swal.fire({
@@ -101,9 +105,9 @@ export const Login = () => {
             type="email"
             className={`form-control form-control-solid h-auto py-5 px-6`}
             name="email"
-            value={userInput.userName}
+            value={userInput.username}
             onChange={(e) => {
-              setUserInput({ ...userInput, userName: e.target.value });
+              setUserInput({ ...userInput, username: e.target.value });
             }}
           />
         </div>

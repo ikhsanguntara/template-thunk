@@ -105,7 +105,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         console.log(action, "action");
         state.loading = false;
-        state.token = action.payload.data.token;
+        state.token = action.payload.access_token;
       })
       .addCase(me.pending, (state) => {
         state.loading = true;
