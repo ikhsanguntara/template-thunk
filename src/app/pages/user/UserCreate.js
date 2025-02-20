@@ -2,15 +2,19 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Button, Form, Col } from "react-bootstrap";
+import { Button, Form, Col, Row } from "react-bootstrap";
 import {
   Card,
   CardBody,
   CardHeader,
   CardHeaderToolbar,
 } from "../../../_metronic/_partials/controls";
+import {
+  FormInput,
+  FormTextarea,
+  FormSelect,
+} from "../../utility/FormComponent"; // Import komponen
 import Select from "react-select";
-
 // Schema validasi dengan Yup
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -25,12 +29,13 @@ const schema = yup.object().shape({
     .required("Email is required"),
   phone: yup
     .string()
-    .matches(/^\d+$/, "Phone must be a number")
+    .matches(/^[0-9]+$/, "Phone must be a number")
     .nullable(),
   roles: yup
     .array()
     .of(yup.string().required("Invalid role"))
     .min(1, "At least one role must be selected"),
+  description: yup.string().required("Description is required"),
 });
 
 const options = [
@@ -39,49 +44,24 @@ const options = [
   { value: "viewer", label: "Viewer" },
 ];
 
-const FormInput = ({ label, name, type = "text", register, errors, required }) => (
-  <Form.Group as={Col} controlId={`form${name}`}>
-    <Form.Label className={required ? "required" : ""}>{label}</Form.Label>
-    <Form.Control type={type} {...register(name)} />
-    <small className="text-danger">{errors[name]?.message}</small>
-  </Form.Group>
-);
-
-const FormSelect = ({ control, name, errors }) => (
-  <Form.Group>
-    <Form.Label className="required">Roles</Form.Label>
-    <Controller
-      name={name}
-      control={control}
-      render={({ field }) => (
-        <Select
-          {...field}
-          options={options}
-          isMulti
-          isClearable
-          getOptionLabel={(e) => e.label}
-          getOptionValue={(e) => e.value}
-          value={options.filter((option) => field.value.includes(option.value))} // Pastikan nilai yang dipilih ditampilkan
-          onChange={(selected) =>
-            field.onChange(selected ? selected.map((item) => item.value) : [])
-          }
-        />
-      )}
-    />
-    <small className="text-danger">{errors[name]?.message}</small>
-  </Form.Group>
-);
-
 export const UserCreate = () => {
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, touchedFields },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: "onChange",
     defaultValues: {
-      roles: [], // Pastikan default-nya array kosong agar tidak error
+      username: "",
+      fullname: "",
+      password: "",
+      confirmPassword: "",
+      email: "",
+      phone: "",
+      roles: [],
+      description: "",
     },
   });
 
@@ -99,28 +79,34 @@ export const UserCreate = () => {
         </CardHeaderToolbar>
       </CardHeader>
       <CardBody>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Row>
+        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Row className="gap-2">
             <FormInput
               label="Username"
               name="username"
+              type="text"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
               required
             />
+
             <FormInput
               label="Fullname"
               name="fullname"
+              type="text"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
               required
             />
-          </Form.Row>
-          <Form.Row>
+          </Row>
+          <Row className="gap-2">
             <FormInput
               label="Password"
               name="password"
               type="password"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
             />
@@ -128,26 +114,40 @@ export const UserCreate = () => {
               label="Re-password"
               name="confirmPassword"
               type="password"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
             />
-          </Form.Row>
-          <Form.Row>
+          </Row>
+          <Row className="gap-2">
             <FormInput
               label="Email"
               name="email"
               type="email"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
             />
             <FormInput
               label="No Handphone"
               name="phone"
+              type="number"
+              touchedFields={touchedFields}
               register={register}
               errors={errors}
             />
-          </Form.Row>
-          <FormSelect control={control} name="roles" errors={errors} />
+          </Row>
+          <Row className="gap-2">
+            <FormSelect control={control} name="roles" errors={errors} />
+            <FormTextarea
+              label="Description"
+              name="description"
+              touchedFields={touchedFields}
+              register={register}
+              errors={errors}
+              required
+            />
+          </Row>
           <Button type="submit" className="mt-3">
             Submit
           </Button>
