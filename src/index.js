@@ -1,11 +1,11 @@
 /**
- * Create React App entry point. This and `public/index.html` files can not be
+ * Create React App entry point. This and `public/index.html` files cannot be
  * changed or moved.
  */
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { store, persistor } from "./app/store";
 import App from "./app/App";
 import "./index.scss"; // Standard version
@@ -33,7 +33,10 @@ import { env } from "./env";
 const { PUBLIC_URL } = process.env;
 setupAxios(store);
 
-ReactDOM.render(
+// Gunakan createRoot sebagai pengganti ReactDOM.render
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <MetronicI18nProvider>
     <MetronicLayoutProvider>
       <MetronicSubheaderProvider>
@@ -42,6 +45,5 @@ ReactDOM.render(
         </MetronicSplashScreenProvider>
       </MetronicSubheaderProvider>
     </MetronicLayoutProvider>
-  </MetronicI18nProvider>,
-  document.getElementById("root")
+  </MetronicI18nProvider>
 );

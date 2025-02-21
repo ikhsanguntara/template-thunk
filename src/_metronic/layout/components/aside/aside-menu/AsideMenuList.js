@@ -168,7 +168,6 @@ export function AsideMenuList({ layoutProps }) {
       ],
     },
   ];
-
   return (
     <>
       {/* Menu Nav */}
@@ -176,13 +175,10 @@ export function AsideMenuList({ layoutProps }) {
         {/* Loop Menu Level 1 */}
         {listMenu.map((menu) => {
           if (menu.childs.length === 0) {
-            // Render don't have child
             return (
               <li
-                className={`menu-item ${getMenuItemActive(
-                  `${menu.url}`,
-                  false
-                )}`}
+                key={menu.url} // Tambahkan key
+                className={`menu-item ${getMenuItemActive(menu.url, false)}`}
                 aria-haspopup="true"
               >
                 <NavLink className="menu-link" to={menu.url}>
@@ -194,11 +190,11 @@ export function AsideMenuList({ layoutProps }) {
               </li>
             );
           } else {
-            // Render if have child
             return (
               <li
+                key={menu.url} // Tambahkan key
                 className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  `${menu.url}`,
+                  menu.url,
                   true
                 )}`}
                 aria-haspopup="true"
@@ -211,95 +207,82 @@ export function AsideMenuList({ layoutProps }) {
                     />
                   </span>
                   <span className="menu-text">{menu.title}</span>
-
                   <i className="menu-arrow" />
                 </NavLink>
-                <div className="menu-submenu ">
+                <div className="menu-submenu">
                   <ul className="menu-subnav">
-                    <ul className="menu-subnav">
-                      {/* Loop Menu Level 2 */}
-                      {menu.childs.map((submenu) => {
-                        if (submenu.childs.length === 0) {
-                          // Render if don't have child
-                          return (
-                            <li
-                              className={`menu-item ${getMenuItemActive(
-                                `${submenu.url}`
-                              )}`}
-                              aria-haspopup="true"
+                    {menu.childs.map((submenu) => {
+                      if (submenu.childs.length === 0) {
+                        return (
+                          <li
+                            key={submenu.url} // Tambahkan key
+                            className={`menu-item ${getMenuItemActive(
+                              submenu.url
+                            )}`}
+                            aria-haspopup="true"
+                          >
+                            <NavLink className="menu-link" to={submenu.url}>
+                              <i className="menu-bullet menu-bullet-dot">
+                                <span />
+                              </i>
+                              <span className="menu-text">{submenu.title}</span>
+                            </NavLink>
+                          </li>
+                        );
+                      } else {
+                        return (
+                          <li
+                            key={submenu.url} // Tambahkan key
+                            className={`menu-item menu-item-submenu ${getMenuItemActive(
+                              submenu.url,
+                              true
+                            )}`}
+                            aria-haspopup="true"
+                            data-menu-toggle="hover"
+                          >
+                            <NavLink
+                              className="menu-link menu-toggle"
+                              to={submenu.url}
                             >
-                              <NavLink className="menu-link" to={submenu.url}>
-                                <i className="menu-bullet menu-bullet-dot">
-                                  <span />
-                                </i>
-                                <span className="menu-text">
-                                  {submenu.title}
-                                </span>
-                              </NavLink>
-                            </li>
-                          );
-                        } else {
-                          // Render if have child
-                          return (
-                            <li
-                              className={`menu-item menu-item-submenu ${getMenuItemActive(
-                                `${submenu.url}`,
-                                true
-                              )}`}
-                              aria-haspopup="true"
-                              data-menu-toggle="hover"
-                            >
-                              <NavLink
-                                className="menu-link menu-toggle"
-                                to={submenu.url}
-                              >
-                                <span className="svg-icon menu-icon">
-                                  <SVG
-                                    src={toAbsoluteUrl(
-                                      `/media/svg/icons/${submenu.icon}`
-                                    )}
-                                  />
-                                </span>
-                                <span className="menu-text">
-                                  {submenu.title}
-                                </span>
-
-                                <i className="menu-arrow" />
-                              </NavLink>
-
-                              <div className="menu-submenu ">
-                                <ul className="menu-subnav">
-                                  <ul className="menu-subnav"></ul>
-                                  {/* Loop Menu Level 3 */}
-                                  {submenu.childs.map((child) => {
-                                    return (
-                                      <li
-                                        className={`menu-item ${getMenuItemActive(
-                                          `${child.url}`
-                                        )}`}
-                                        aria-haspopup="true"
-                                      >
-                                        <NavLink
-                                          className="menu-link"
-                                          to={child.url}
-                                        >
-                                          <i className="menu-bullet menu-bullet-dot">
-                                            <span />
-                                          </i>
-                                          <span className="menu-text">
-                                            {child.title}
-                                          </span>
-                                        </NavLink>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </li>
-                          );
-                        }
-                      })}
-                    </ul>
+                              <span className="svg-icon menu-icon">
+                                <SVG
+                                  src={toAbsoluteUrl(
+                                    `/media/svg/icons/${submenu.icon}`
+                                  )}
+                                />
+                              </span>
+                              <span className="menu-text">{submenu.title}</span>
+                              <i className="menu-arrow" />
+                            </NavLink>
+                            <div className="menu-submenu">
+                              <ul className="menu-subnav">
+                                {submenu.childs.map((child) => (
+                                  <li
+                                    key={child.url} // Tambahkan key
+                                    className={`menu-item ${getMenuItemActive(
+                                      child.url
+                                    )}`}
+                                    aria-haspopup="true"
+                                  >
+                                    <NavLink
+                                      className="menu-link"
+                                      to={child.url}
+                                    >
+                                      <i className="menu-bullet menu-bullet-dot">
+                                        <span />
+                                      </i>
+                                      <span className="menu-text">
+                                        {child.title}
+                                      </span>
+                                    </NavLink>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </li>
+                        );
+                      }
+                    })}
                   </ul>
                 </div>
               </li>
